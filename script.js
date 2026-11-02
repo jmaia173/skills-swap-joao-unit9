@@ -1,61 +1,14 @@
 // Skill Swap scripts
 
-const skills = [
-  {
-    title: 'Guitar Lessons',
-    category: 'Music',
-    price: 20,
-    description: 'Learn chords, strumming, and your first songs.',
-    provider: 'Maria S.',
-    details: 'Beginner friendly. Sessions are 1 hour, in person or online. Bring your own guitar.'
-  },
-  {
-    title: 'Web Design Basics',
-    category: 'Programming',
-    price: 25,
-    description: 'Build your first website with HTML and CSS.',
-    provider: 'Daniel K.',
-    details: 'Covers layout, styling, and responsive design. Laptop required.'
-  },
-  {
-    title: 'Python Tutoring',
-    category: 'Programming',
-    price: 20,
-    description: 'Learn Python fundamentals and problem solving.',
-    provider: 'Sam T.',
-    details: 'Variables, loops, functions, and data structures. Laptop required.'
-  },
-  {
-    title: 'Resume Review',
-    category: 'Career',
-    price: 0,
-    description: 'Get feedback to make your resume stand out.',
-    provider: 'Priya N.',
-    details: 'Free 30-minute review focused on formatting, wording, and impact.'
-  },
-  {
-    title: 'Portuguese Conversation',
-    category: 'Language',
-    price: 15,
-    description: 'Practice speaking with a native speaker.',
-    provider: 'Joao M.',
-    details: 'Casual conversation practice for all levels. Focus on everyday vocabulary and pronunciation.'
-  },
-  {
-    title: 'Soccer Training',
-    category: 'Sports',
-    price: 30,
-    description: 'Improve your passing, dribbling, and fitness.',
-    provider: 'Alex R.',
-    details: 'Drills for all levels, focused on technique and game awareness. Cleats recommended.'
-  }
-];
+// Skills now come from the backend API instead of a hardcoded array
+let skills = [];
 
 const cardContainer = document.getElementById('card-container');
 const filterBar = document.getElementById('filter-bar');
+const skillsStatus = document.getElementById('skills-status');
 
 function formatPrice(price) {
-  return price === 0 ? 'Free' : `$${price} / hour`;
+  return Number(price) === 0 ? 'Free' : `$${price} / hour`;
 }
 
 function renderSkills(list, container, emptyText) {
@@ -73,7 +26,7 @@ function renderSkills(list, container, emptyText) {
           <p class="price">${formatPrice(skill.price)}</p>
           <p class="provider">Provider: ${skill.provider}</p>
           <div class="details">
-            <p>${skill.details}</p>
+            <p>${skill.details || `Offered by ${skill.provider}. Category: ${skill.category}.`}</p>
           </div>
         </article>`
     )
@@ -90,6 +43,32 @@ function enableCardToggle(container) {
   });
 }
 
+// ===== Load skills from the API =====
+function renderCurrentFilter() {
+  const activeBtn = filterBar.querySelector('.filter-btn.active');
+  const category = activeBtn ? activeBtn.dataset.category : 'All';
+  renderSkills(
+    filterSkillsByCategory(skills, category),
+    cardContainer,
+    'No skills found in this category.'
+  );
+}
+
+async function loadSkills() {
+  skillsStatus.classList.remove('error');
+  skillsStatus.textContent = 'Loading skills...';
+  try {
+    skills = await window.apiService.fetchSkills();
+    skillsStatus.textContent = '';
+    renderCurrentFilter();
+  } catch (error) {
+    skillsStatus.classList.add('error');
+    skillsStatus.textContent =
+      'Could not load skills. Make sure the backend is running on http://localhost:3000.';
+    cardContainer.innerHTML = '';
+  }
+}
+
 // ===== Filter buttons =====
 filterBar.addEventListener('click', (event) => {
   const button = event.target.closest('.filter-btn');
@@ -98,11 +77,7 @@ filterBar.addEventListener('click', (event) => {
   filterBar.querySelectorAll('.filter-btn').forEach((btn) => btn.classList.remove('active'));
   button.classList.add('active');
 
-  renderSkills(
-    filterSkillsByCategory(skills, button.dataset.category),
-    cardContainer,
-    'No skills found in this category.'
-  );
+  renderCurrentFilter();
 });
 
 // ===== Find My Match =====
@@ -153,7 +128,43 @@ calcBtn.addEventListener('click', () => {
   calcResult.textContent = total === 0 ? 'Total cost: Free' : `Total cost: $${total.toFixed(2)}`;
 });
 
+// ===== Add skill form =====
+const skillForm = document.getElementById('skill-form');
+const formMessage = document.getElementById('form-message');
+
+skillForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const price = parseFloat(document.getElementById('skill-price').value);
+  if (Number.isNaN(price) || price < 0) {
+    formMessage.textContent = 'Please enter a price of 0 or more.';
+    formMessage.classList.add('error');
+    return;
+  }
+
+  const skillData = {
+    title: document.getElementById('skill-title').value.trim(),
+    category: document.getElementById('skill-category').value,
+    price,
+    provider: document.getElementById('skill-provider').value.trim(),
+    description: document.getElementById('skill-description').value.trim()
+  };
+
+  formMessage.classList.remove('error');
+  formMessage.textContent = 'Saving...';
+
+  try {
+    await window.apiService.createSkill(skillData);
+    skillForm.reset();
+    formMessage.textContent = 'Skill added!';
+    await loadSkills();
+  } catch (error) {
+    formMessage.classList.add('error');
+    formMessage.textContent = 'Could not add skill. Please try again.';
+  }
+});
+
 // ===== Init =====
 enableCardToggle(cardContainer);
 enableCardToggle(matchResults);
-renderSkills(skills, cardContainer, 'No skills found in this category.');
+loadSkills();

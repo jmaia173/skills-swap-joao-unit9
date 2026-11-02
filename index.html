@@ -40,6 +40,7 @@
         <button class="filter-btn" data-category="Sports">Sports</button>
       </div>
 
+      <p id="skills-status" class="calc-result" aria-live="polite"></p>
       <div class="card-container" id="card-container"></div>
     </section>
 
@@ -81,6 +82,40 @@
         <p id="calc-result" class="calc-result" aria-live="polite"></p>
       </div>
     </section>
+
+    <section id="offer" class="offer">
+      <h2>Offer a Skill</h2>
+      <form id="skill-form" class="calc-box">
+        <div class="calc-field">
+          <label for="skill-title">Title</label>
+          <input type="text" id="skill-title" required placeholder="e.g. Piano Lessons">
+        </div>
+        <div class="calc-field">
+          <label for="skill-category">Category</label>
+          <select id="skill-category" required>
+            <option value="Programming">Programming</option>
+            <option value="Music">Music</option>
+            <option value="Career">Career</option>
+            <option value="Language">Language</option>
+            <option value="Sports">Sports</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="skill-price">Price ($ / hour)</label>
+          <input type="number" id="skill-price" min="0" step="any" required placeholder="e.g. 20">
+        </div>
+        <div class="calc-field">
+          <label for="skill-provider">Your name</label>
+          <input type="text" id="skill-provider" required placeholder="e.g. Joao M.">
+        </div>
+        <div class="calc-field">
+          <label for="skill-description">Description</label>
+          <input type="text" id="skill-description" required placeholder="What will you teach?">
+        </div>
+        <button type="submit" class="calc-btn">Add Skill</button>
+        <p id="form-message" class="calc-result" aria-live="polite"></p>
+      </form>
+    </section>
   </main>
 
   <footer id="about">
@@ -88,6 +123,7 @@
   </footer>
 
   <script src="skillswap-functions.js"></script>
+  <script src="api-service.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
