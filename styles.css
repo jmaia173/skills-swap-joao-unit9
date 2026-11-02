@@ -1,0 +1,298 @@
+/* ===== Base / Layout ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  color: #222;
+  background-color: #f7f9fc;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* ===== Header & Navigation ===== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1rem 2rem;
+  background-color: #1e3a5f;
+  color: #fff;
+}
+
+.logo {
+  font-size: 1.6rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.3rem 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.nav-links a:hover {
+  border-bottom-color: #ffb703;
+}
+
+/* ===== Hero ===== */
+.hero {
+  text-align: center;
+  padding: 4rem 1rem;
+  background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+  color: #fff;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.hero h2 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.cta {
+  display: inline-block;
+  background-color: #ffb703;
+  color: #222;
+  padding: 0.8rem 1.6rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.cta:hover {
+  background-color: #ffa000;
+}
+
+/* ===== Skills Section ===== */
+.skills h2 {
+  margin-bottom: 1rem;
+}
+
+/* ===== Skill Cards ===== */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.skill-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.skill-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.skill-card h3 {
+  color: #1e3a5f;
+  margin-bottom: 0.5rem;
+}
+
+.skill-card .price {
+  font-weight: bold;
+  color: #2a9d8f;
+  margin-top: 0.5rem;
+}
+
+.skill-card .provider {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Hidden by default, shown when the card is expanded */
+.skill-card .details {
+  display: none;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #ddd;
+}
+
+.skill-card.expanded {
+  border: 2px solid #3a7bd5;
+}
+
+.skill-card.expanded .details {
+  display: block;
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #1e3a5f;
+  color: #fff;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .nav-links {
+    gap: 1rem;
+  }
+}
+
+/* ===== Filter Buttons ===== */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid #1e3a5f;
+  border-radius: 20px;
+  background-color: #fff;
+  color: #1e3a5f;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.filter-btn:hover {
+  background-color: #e3ecf7;
+}
+
+.filter-btn.active {
+  background-color: #1e3a5f;
+  color: #fff;
+}
+
+.empty-message {
+  grid-column: 1 / -1;
+  color: #666;
+}
+
+/* ===== Cost Calculator ===== */
+.calculator {
+  margin-top: 3rem;
+}
+
+.calculator h2 {
+  margin-bottom: 1rem;
+}
+
+.calc-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  background-color: #fff;
+  padding: 1.25rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.calc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.calc-field label {
+  font-weight: bold;
+  color: #1e3a5f;
+}
+
+.calc-field input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 160px;
+}
+
+.calc-btn {
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #ffb703;
+  color: #222;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.calc-btn:hover {
+  background-color: #ffa000;
+}
+
+.calc-result {
+  flex-basis: 100%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2a9d8f;
+  min-height: 1.6rem;
+}
+
+.calc-result.error {
+  color: #c0392b;
+  font-size: 1rem;
+}
+
+/* ===== Find My Match ===== */
+.match {
+  margin-top: 3rem;
+}
+
+.match h2 {
+  margin-bottom: 1rem;
+}
+
+.calc-field select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 160px;
+  background-color: #fff;
+}
+
+.match-results {
+  margin-top: 1.5rem;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skill Swap</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1 class="logo">Skill Swap</h1>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#skills">Browse Skills</a></li>
+        <li><a href="#match">Find My Match</a></li>
+        <li><a href="#calculator">Cost Calculator</a></li>
+        <li><a href="#offer">Offer Skills</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <h2>Trade Skills, Grow Together</h2>
+      <p>Offer what you know. Learn what you want.</p>
+      <a href="#skills" class="cta">Browse Skills</a>
+    </section>
+
+    <section id="skills" class="skills">
+      <h2>Featured Skills</h2>
+
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-btn active" data-category="All">All</button>
+        <button class="filter-btn" data-category="Programming">Programming</button>
+        <button class="filter-btn" data-category="Music">Music</button>
+        <button class="filter-btn" data-category="Career">Career</button>
+        <button class="filter-btn" data-category="Language">Language</button>
+        <button class="filter-btn" data-category="Sports">Sports</button>
+      </div>
+
+      <div class="card-container" id="card-container"></div>
+    </section>
+
+    <section id="match" class="match">
+      <h2>Find My Match</h2>
+      <div class="calc-box">
+        <div class="calc-field">
+          <label for="match-category">Category</label>
+          <select id="match-category">
+            <option value="Programming">Programming</option>
+            <option value="Music">Music</option>
+            <option value="Career">Career</option>
+            <option value="Language">Language</option>
+            <option value="Sports">Sports</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="match-max-price">Max price ($ / hour)</label>
+          <input type="number" id="match-max-price" min="0" step="any" placeholder="e.g. 25">
+        </div>
+        <button id="match-btn" class="calc-btn">Find My Match</button>
+        <p id="match-message" class="calc-result" aria-live="polite"></p>
+      </div>
+      <div class="card-container match-results" id="match-results"></div>
+    </section>
+
+    <section id="calculator" class="calculator">
+      <h2>Session Cost Calculator</h2>
+      <div class="calc-box">
+        <div class="calc-field">
+          <label for="rate-input">Hourly rate ($)</label>
+          <input type="number" id="rate-input" min="0" step="any" placeholder="e.g. 25">
+        </div>
+        <div class="calc-field">
+          <label for="hours-input">Hours</label>
+          <input type="number" id="hours-input" min="0" step="any" placeholder="e.g. 1.5">
+        </div>
+        <button id="calc-btn" class="calc-btn">Calculate</button>
+        <p id="calc-result" class="calc-result" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer id="about">
+    <p>&copy; 2026 Skill Swap</p>
+  </footer>
+
+  <script src="skillswap-functions.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
